@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 5</h1>
+		<p>Особиста бібліотека. Картотека домашньої бібліотеки: дані книги (автори (піб, рік народження, короткий опис), назва книги, жанр, видавництво (назва, реєстраційний номер, рік засування)). Реалізувати розділи бібліотеки (спеціальна література, хобі, домашнє господарство і т.д.), походження книги і наявність на даний час. Організувати додавання/вилучення книг та вибір книг за назвою, за ПІБ автора, за видавництвом.</p>
+		<script>
+			//ВВодимо необхідні дані
+			class Author{
+				constructor(name,birthYear,shortDescribe){
+					this.name = name
+					this.birthYear = birthYear
+					this.shortDescribe = shortDescribe
+				}
+			}
+			class PublishingHouse{
+				constructor(title,regNum,fundationYear){
+					this.title = title
+					this.regNum = regNum
+					this.fundationYear = fundationYear
+				}
+			}
+			class Book{
+				constructor(author,title,genre,publishingHouse){
+					this.author = author
+					this.title = title
+					this.genre = genre
+					this.publishingHouse = publishingHouse
+				}
+			}
+			class PrivateLibrary{
+				constructor(books){
+					this.books = books
+				}
+
+				addBooks(newBook){
+					this.books.push(new Book(new Author(newBook.name,newBook.birthYear,newBook.shortDescribe),newBook.title,newBook.genre,new PublishingHouse(newBook.title,newBook.regNum,newBook.fundationYear)))
+				}
+				deleteBooks(book){
+					 this.books = this.books.filter(element=>element!==book)
+				}
+				chooseBookByBook_Title(title){
+					return this.books.filter(element=>element.title===title)
+				}
+				chooseBookByBookAuthorName(name){
+					return this.books.filter(element=>element.author.name === name)
+				}
+				chooseBookByBookPublishingHouse(publ){
+					return this.books.filter(element=>element.publishingHouse.title === publ)
+				}
+			}
+
+			//Виводимо результ
+			let books = [
+				new Book(new Author('Author1',1951,'short describe about Author1'),'book1', 'fntasy', new PublishingHouse('publisher1','001',2001)),
+				new Book(new Author('Author2',1952,'short describe about Author2'),'book2', 'comedy', new PublishingHouse('publisher2','002',2002)),
+				new Book(new Author('Author3',1953,'short describe about Author3'),'book3', 'adventures', new PublishingHouse('publisher3','003',2003)),
+				new Book(new Author('Author4',1954,'short describe about Author4'),'book4', 'action', new PublishingHouse('publisher4','004',2004)),
+				new Book(new Author('Author5',1955,'short describe about Author5'),'book5', 'horror', new PublishingHouse('publisher5','005',2005))
+			]
+			let privateLibrary = new PrivateLibrary(books)
+			console.log(privateLibrary)
+			let newPlusBook = new Book(new Author('Author6',1956,'short describe about Author6'),'book6', 'poem', new PublishingHouse('publisher6','006',2006))
+			privateLibrary.addBooks(newPlusBook)
+			console.log(privateLibrary)
+			privateLibrary.deleteBooks(books[3])
+			console.log(privateLibrary)
+			let currentBookByBook_Title = privateLibrary.chooseBookByBook_Title('book1')
+			console.log(currentBookByBook_Title)
+			let currentBookByBookAuthorName = privateLibrary.chooseBookByBookAuthorName('Author2')
+			console.log(currentBookByBookAuthorName)
+			let currentBookByBookPublishingHouse = privateLibrary.chooseBookByBookPublishingHouse('publisher3')
+			console.log(currentBookByBookPublishingHouse) 
+			//З приводу реалізації розділів, щось я не можу розібратися з виконанням цього пункту))
+			
+		</script>
+	</body>
+</html>

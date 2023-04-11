@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 6</h1>
+		<p>Дано два класи MultChecker (клас для перевірки таблиці множення - рандомно генеруються числа, які треба перемножати), AddChecker (клас для перевірки додавання - рандомно генеруються числа у заданому діапазоні, які треба додавати). Обидва класи надсилають результати тестування об'єкту класу Hystory, який зберігає історію тестування у масиві у вигляді об'єктів</p>
+		<script>
+			//ВВодимо необхідні дані
+
+			class MultChecker{
+				constructor(minValue = 1,maxValue = 10){
+					this.minValue = minValue
+					this.maxValue = maxValue
+				}
+				getRandomValue(){
+					return this. minValue + Math.floor(Math.random()*(this.maxValue-this.minValue+1))
+				}
+				multAction(){
+					let num1 = this.getRandomValue()
+					let num2 = this.getRandomValue()
+					let resultOfMultAction = num1*num2
+					let userAnswer = prompt(`Розв'яжіть приклад: ${num1}*${num2} = ...`)
+					return [num1,num2,'*',resultOfMultAction,userAnswer]
+				}
+			}
+
+			class AddChecker{
+				constructor(minValue = 1,maxValue = 10){
+					this.minValue = minValue
+					this.maxValue = maxValue
+				}
+				getRandomValue(){
+					return this. minValue + Math.floor(Math.random()*(this.maxValue-this.minValue+1))
+				}
+				addAction(){
+					let num1 = this.getRandomValue()
+					let num2 = this.getRandomValue()
+					let resultOfMultAction = num1+num2
+					let userAnswer = prompt(`Розв'яжіть приклад: ${num1}+${num2} = ...`)
+					return [num1,num2,'+',resultOfMultAction,userAnswer]
+				}
+			}
+
+			class TestData{
+				constructor(arr){
+					this.num1 = arr[0]
+					this.num2 = arr[1]
+					this.operator = arr[2]
+					this.resultOfAction = arr[3]
+					this.userAnswer = arr[4]
+				}
+			}
+
+			class History{
+				constructor(){
+					this.testDataList = []
+				}
+
+				addToTestDataList(val){
+					this.testDataList.push(val)
+				}
+
+				printHistory() {
+        			console.log(this.testDataList)
+      		}
+			}
+
+			class TestManager{
+				static temp
+				constructor(trysQuantity,interval){
+				if (TestManager.temp) return TestManager.temp
+					this.trysQuantity = trysQuantity
+					this.interval = interval
+					this.history = new History()
+					TestManager.temp = this
+					
+				}
+
+				getN_Generator(){
+					return 1 + Math.floor(Math.random()*2)
+				}
+
+				startSolvingActions(){
+					let counter = 0
+					let currentInterval = setInterval(() => {
+						let actionVariant = this.getN_Generator()
+						let testData
+						if (actionVariant===1)  testData = new TestData(new MultChecker().multAction())
+						else  testData = new TestData(new AddChecker().addAction())
+						this.history.addToTestDataList(testData)
+						counter++
+						if (counter===this.trysQuantity) {
+							clearInterval(currentInterval)
+							this.history.printHistory()
+						}
+						
+					}, this.interval*1000);
+					
+					this.history.printHistory()
+				}
+				//Пробував зробити startSolvingActions() через while або dowhile, щось у мене не вийшло
+			}
+			
+			//Виводимо результ
+
+			let testManager = new TestManager(3,2)
+			testManager.startSolvingActions()
+					
+			
+		</script>
+	</body>
+</html>

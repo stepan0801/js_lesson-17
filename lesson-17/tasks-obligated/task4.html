@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 4</h1>
+		<p>Склад. База товарів, які зберігаються на складі: назва товару, одиниця виміру, кількість, фірма виробник (назва, реєстраційний номер). Організувати реєстрацію/відвантаження товарів, фільтрація за назвою товару, фільтрація за назвою фірми</p>
+		<script>
+			//ВВодимо необхідні дані
+			class Firm{
+				constructor(firmTitle,regNum){
+					this.firmTitle = firmTitle
+					this.regNum = regNum
+				}
+
+				toString(){
+					return `${this.title} - ${this.regNum}`
+				}
+			}
+
+			class Good{
+				constructor(title, quantity,firm){
+					this.title = title
+					this.quantity = quantity
+					this.firm = firm
+				}
+
+				toString(){
+					return `Товар ${this.title}, Кількість ${this.quantity}, Виробник ${this.firm}`
+				}
+			}
+
+			class StorageGoods{
+				constructor(goods){
+					this.goods = goods
+				}
+
+				registrationGoods(newGood){
+					this.goods.push(new Good(newGood.title,newGood.quantity,new Firm(newGood.title,newGood.regNum)))
+				}
+				removeGoods(title,quantity){
+					for (const good of this.goods) {
+						if (title===good.title&&quantity<=good.quantity) return good.quantity = good.quantity-quantity
+						else throw new Error('Перевірте правильність введеня даних')
+					}
+				}
+				filterByTitle(title){
+					for (const good of  this.goods) {
+						if (title===good.title) return good
+						else throw new Error('Перевірте правильність введеня даних')
+					}
+				}
+				filterByFirmTitle(firmTitle){
+					for (const good of  this.goods) {
+						if (firmTitle===good.firm.firmTitle) return good
+						else throw new Error('Перевірте правильність введеня даних')
+					}
+				}
+			}
+
+			//Виводимо результ		
+			let goods = [
+			new Good('prod1',10,new Firm('firm1',001)),
+			new Good('prod2',20,new Firm('firm2',002)),
+			new Good('prod3',30,new Firm('firm3',003)),
+			new Good('prod4',40,new Firm('firm4',004))
+			]
+
+			let storageGoods = new StorageGoods(goods)
+			console.log(storageGoods);
+			let newSomeGood = new Good('prod5',50,new Firm('firm5',005))
+			storageGoods.registrationGoods(newSomeGood)
+			console.log(storageGoods);
+			storageGoods.removeGoods('prod1',8)
+			console.log(storageGoods);
+			let searchGoodBytitle = storageGoods.filterByTitle('prod1')
+			console.log(searchGoodBytitle);
+			let searchGoodByFirmTitle = storageGoods.filterByFirmTitle('firm1')
+			console.log(searchGoodByFirmTitle);
+		</script>
+	</body>
+</html>

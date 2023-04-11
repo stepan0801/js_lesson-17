@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 1</h1>
+		<p>Створити клас, що дозволяє виконувати такі операції над масивами: знаходження кількості додатних, кількості від’ємних, кількість входжень деякого числа (статичні методи)</p>
+		<script>
+			// Вводимо необхідні дані для створення масиву з даними
+			class SomeActionsUnderArray{
+				static positiveValueCounter = 0
+				static negativeValueCounter = 0
+				static quantityValueCounter = 0
+				constructor(dataList) {this.dataList = dataList
+			}
+
+			getPositive(){
+				++SomeActionsUnderArray.positiveValueCounter
+				return this.dataList.reduce((prevSum,el)=> el>0?++prevSum:prevSum,0)
+			}
+			getNegative(){
+				++SomeActionsUnderArray.negativeValueCounter
+				return this.dataList.reduce((prevSum,el)=> el<0?++prevSum:prevSum,0)
+			}
+			getQuantity(number){
+				++SomeActionsUnderArray.quantityValueCounter
+				return this.dataList.reduce((prevSum,el)=>el===number?++prevSum:prevSum,0)
+			}
+			
+		}
+			
+			//Робимо обчислення та виводимо результат
+			let newArr = new SomeActionsUnderArray([25,2,48,-14,98,-15,2,69,78,14,-65,91,14,-32,17,2])
+			console.log(newArr)
+			document.write(`<p>Кількість додатніх:${newArr.getPositive()}</p>
+			<p>Кількість від'ємних:${newArr.getNegative()}</p>
+			<p>Кількість входжень:${newArr.getQuantity(2)}</p>`)
+			
+		</script>
+	</body>
+</html>
